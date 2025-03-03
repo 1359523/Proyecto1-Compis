@@ -18,7 +18,7 @@ struct Token {
 const string palabras_clave[] = { "int", "float", "string", "bool", "if", "else", "while", "return", "read", "write", "def" };
 const char operadores_aritmeticos[] = { '+', '-', '*', '/' };
 const string operadores_relacionales[] = { "==", "!=", "> ", "< " };
-const char simbolos_especiales[] = { '{', '}', '(', ')', ';', '=' };
+const char simbolos_especiales[] = { '{', '}', '(', ')', ';', '=', ','};
 
 bool esDigito(char c) { return c >= '0' && c <= '9'; }
 bool esLetra(char c) { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'; }
@@ -64,7 +64,7 @@ public:
             return esPalabraClave(lexema) ? Token{ PALABRA_CLAVE, lexema } : Token{ IDENTIFICADOR, lexema };
         }
 
-        // Números enteros y flotantes
+        // NÃºmeros enteros y flotantes
         if (esDigito(c)) {
             string numero;
             while (posicion < codigo.size() && esDigito(codigo[posicion])) {
@@ -98,19 +98,19 @@ public:
             return { OPERADOR_RELACIONAL, dosCaracteres };
         }
 
-        // Operadores aritméticos
+        // Operadores aritmÃ©ticos
         if (esOperadorAritmetico(c)) {
             posicion++;
             return { OPERADOR_ARITMETICO, string(1, c) };
         }
 
-        // Símbolos especiales
+        // SÃ­mbolos especiales
         if (esSimboloEspecial(c)) {
             posicion++;
             return { SIMBOLO_ESPECIAL, string(1, c) };
         }
 
-        // Si no coincide con ningún token válido
+        // Si no coincide con ningÃºn token vÃ¡lido
         posicion++;
         return { ERROR, string(1, c) };
     }
