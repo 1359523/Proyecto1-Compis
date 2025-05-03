@@ -1,0 +1,2 @@
+int resultado = 2 + 3 * 5;
+resultado = 23;
