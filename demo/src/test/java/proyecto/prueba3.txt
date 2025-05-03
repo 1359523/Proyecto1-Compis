@@ -1,0 +1,1 @@
+read("datos.txt"); if(True) { print("Sí"); } else { print("No"); }
