@@ -1,0 +1,22 @@
+int numero = 9 * 5 + (5 * 3);
+int a =5;
+int b =10;
+int comp = 10;
+int resultado = 0;
+float bnum = 30;
+string str = "Datos.txt";
+bool correcto = True;
+
+def suma (int c , int d){
+	resultado = a + b;
+}
+
+suma (a, b);
+if (resultado > comp){
+	write ("El numero es mayor a 10", "Datos.txt");
+}
+else {
+	print ("El numero no es mayor a 10");
+}
+
+read ("Datos.txt");
