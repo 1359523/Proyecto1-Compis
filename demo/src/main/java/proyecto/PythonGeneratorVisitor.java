@@ -67,6 +67,20 @@ public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
         return result;
     }
 
+    // Visita cualquier tipo de sentencia (asignación, control, print, etc.)
+    @Override
+    public Integer visitSentencia(ExprParser.SentenciaContext ctx) {
+        System.out.println("Visit: sentencia");
+        return visitChildren(ctx);
+    }
+
+    // Visita la lista de sentencias dentro de un bloque
+    @Override
+    public Integer visitLista_sentencias(ExprParser.Lista_sentenciasContext ctx) {
+        System.out.println("Visit: lista_sentencias");
+        return visitChildren(ctx);
+    }
+
     // Traduce una expresión booleana
     @Override
     public Integer visitBooleano(ExprParser.BooleanoContext ctx) {
@@ -113,20 +127,26 @@ public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
         return null;
     }
 
-    // Visita cualquier tipo de sentencia (asignación, control, print, etc.)
     @Override
-    public Integer visitSentencia(ExprParser.SentenciaContext ctx) {
-        System.out.println("Visit: sentencia");
+    public Integer visitParametros(ExprParser.ParametrosContext ctx) {
+        System.out.println("Visit: parametros");
+        StringBuilder params = new StringBuilder();
+
+        // Primera variable
+        params.append(ctx.getChild(1).getText()); // IDENT después del tipo
+
+        // Parametros siguientes (si hay)
+        for (int i = 2; i < ctx.getChildCount(); i++) {
+            if (ctx.getChild(i).getText().equals(",")) {
+                String siguienteIdent = ctx.getChild(i + 2).getText(); // después de coma viene tipo, luego IDENT
+                params.append(", ").append(siguienteIdent);
+                i += 2; // saltar tipo y nombre
+            }
+        }
+        writeln("# def con parámetros: " + params.toString()); // Comentario informativo
         return visitChildren(ctx);
     }
-
-    // Visita la lista de sentencias dentro de un bloque
-    @Override
-    public Integer visitLista_sentencias(ExprParser.Lista_sentenciasContext ctx) {
-        System.out.println("Visit: lista_sentencias");
-        return visitChildren(ctx);
-    }
-
+    
     // Cierra el archivo de salida
     public void close() {
         writer.close();
