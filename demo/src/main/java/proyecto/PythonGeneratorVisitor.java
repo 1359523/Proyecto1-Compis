@@ -5,12 +5,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import proyecto.antlr.ExprBaseVisitor;
 import proyecto.antlr.ExprParser;
+import proyecto.antlr.ExprParser.Expresion_multiplicacionContext;
+import proyecto.antlr.ExprParser.Expresion_sumaContext;
 
 // Esta clase extiende el visitor base generado por ANTLR para recorrer el árbol sintáctico
 public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
 
     // Archivo de salida .py donde se escribirá el código traducido
     private PrintWriter writer;
+
+    //texto utilizado para guardar la expresion
+    private String ExpresionFinal = "";
 
     // Controla el nivel de sangría para bloques
     private int indentLevel = 0;
@@ -39,15 +44,22 @@ public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
 
         // Extrae el nombre de la variable
         String varName = ctx.IDENT().getText();
+        String value;
 
-        // Extrae el valor asignado, puede ser una expresión, string o booleano
-        String value = ctx.expresion() != null ? ctx.expresion().getText() :
-                       ctx.STRING() != null ? ctx.STRING().getText() :
-                       ctx.booleano() != null ? ctx.booleano().getText() : "";
+        if (ctx.expresion() != null) {
+            visit(ctx.expresion()); // Actualiza ExpresionFinal
+            value = ExpresionFinal;
+        } else if (ctx.STRING() != null) {
+            value = ctx.STRING().getText(); // mantener comillas
+        } else if (ctx.booleano() != null) {
+            visit(ctx.booleano()); // actualiza ExpresionFinal si se visitan booleanos
+            value = ExpresionFinal;
+        } else {
+            value = ""; // por si acaso
+        }
 
-        // Escribe la asignación en Python
         writeln(varName + " = " + value);
-        return visitChildren(ctx);
+        return null;
     }
 
     // Traduce una declaración (aunque en Python no se necesita declarar tipo)
@@ -167,6 +179,7 @@ public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
             }*/
 
         } else {
+            System.out.println("Visit: estructura_control - while");
             //es un while
             writeln("while "+ condicion+ ":");
             visit(ctx.bloque(0));
@@ -194,8 +207,58 @@ public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
     return null;
     }*/
 
+    @Override
+    public Integer visitExpresion_parentesis(ExprParser.Expresion_parentesisContext ctx) {
+        System.out.println("Visit: expresion_parentesis");
 
+    //es un numero
+       if (ctx.NUMERO() != null){
+            ExpresionFinal = ctx.NUMERO().getText();
+        }else if (ctx.IDENT() != null){ //es un id
+            ExpresionFinal = ctx.IDENT().getText();
+        }else if (ctx.expresion() != null){// es una expresion
+            visit(ctx.expresion());
+            ExpresionFinal = "(" + ExpresionFinal + ")";
+        }
+        return null;
+    }
     
+    
+    @Override
+    public Integer visitExpresion_multiplicacion(Expresion_multiplicacionContext ctx) {
+        System.out.println("Visit: entrada_multiplicacion");
+        visit(ctx.expresion_parentesis(0));
+
+        // utilizamos una cadena para constuir la expresion en python
+        StringBuilder sb = new StringBuilder(ExpresionFinal);
+
+        // Recorremos los siguientes operadores y operandos
+        for (int i = 1; i < ctx.expresion_parentesis().size(); i++) {
+            String operador = ctx.getChild(2 * i - 1).getText(); // '*' o '/'
+            visit(ctx.expresion_parentesis(i));
+            sb.append(" ").append(operador).append(" ").append(ExpresionFinal);
+        }
+
+        ExpresionFinal = sb.toString();
+        return null;
+
+    }
+
+   @Override
+    public Integer visitExpresion_suma(Expresion_sumaContext ctx) {
+        visit(ctx.expresion_multiplicacion(0));
+        StringBuilder sb = new StringBuilder(ExpresionFinal);
+
+        for (int i = 1; i < ctx.expresion_multiplicacion().size(); i++) {
+            String operador = ctx.getChild(2 * i - 1).getText();
+            visit(ctx.expresion_multiplicacion(i));
+            sb.append(" ").append(operador).append(" ").append(ExpresionFinal);
+        }
+
+        ExpresionFinal = sb.toString();
+        return null;
+    }
+
     // Cierra el archivo de salida
     public void close() {
         writer.close();
