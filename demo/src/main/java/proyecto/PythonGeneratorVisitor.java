@@ -146,9 +146,61 @@ public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
         writeln("# def con parámetros: " + params.toString()); // Comentario informativo
         return visitChildren(ctx);
     }
+
+    @Override
+    public Integer visitEstructura_control(ExprParser.Estructura_controlContext ctx) {
+        String keyword = ctx.getStart().getText(); // 'if' o 'while'
+        String condicion = ctx.booleano().getText(); //extrae la condicion de la estructura (booleano)
+
+        if(keyword.equals("if")){
+            System.out.println("Visit: estructura_control - if");
+
+            //escribir la estructura if en python
+            writeln("if "+ condicion +":");
+            indentLevel++;
+            visit(ctx.bloque(0));
+
+            //si existe un else opcional se visita
+            /*if (ctx.else_opcional() != null && ctx.else_opcional().bloque() != null){
+                writeln("else:");
+                visit(ctx.else_opcional().bloque());
+            }*/
+
+        } else {
+            //es un while
+            writeln("while "+ condicion+ ":");
+            visit(ctx.bloque(0));
+        }
+
+        return null;
+    }
+
+    @Override
+    public Integer visitExpresion(ExprParser.ExpresionContext ctx) {
+
+        System.out.println("Visit: Expresion");
+        return visit(ctx.expresion_suma());
+    
+    }
+    //PARA EL ELSE_OPCIONAL:
+    //@Override
+    /*public Integer visitElse_opcional(ExprParser.Else_opcionalContext ctx) {
+    System.out.println("Visit: else_opcional");
+    
+    if (ctx.bloque() != null) {
+        writeln("else:");
+        visit(ctx.bloque());
+    }
+    return null;
+    }*/
+
+
     
     // Cierra el archivo de salida
     public void close() {
         writer.close();
     }
 }
+
+
+
