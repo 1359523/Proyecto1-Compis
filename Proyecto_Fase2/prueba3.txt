@@ -1,1 +1,7 @@
-read("datos.txt"); if(True) { print("Sí"); } else { print("No"); }
+read("datos.txt"); 
+if(True) { 
+    print("Sí"); 
+} else { 
+    print("No"); 
+}
+print("Terminado");

@@ -16,4 +16,8 @@ public class Variable {
     public String getValor() {
         return valor;
     }
+
+    public void SetValor(String valor){
+        this.valor = valor;
+    }
 }

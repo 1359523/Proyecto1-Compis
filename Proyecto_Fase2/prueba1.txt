@@ -2,4 +2,7 @@ int var = 5;
 int var2 = var + 5;
 int var3 = 10 + 20;
 string Ejemplo = "Hola Mundo";
+if (5 > 10){
+    var3 = 10;
+}
 print("Hola Mundo");
