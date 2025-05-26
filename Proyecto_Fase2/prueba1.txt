@@ -1,2 +1,5 @@
+int var = 5;
+int var2 = var + 5;
+int var3 = 10 + 20;
 string Ejemplo = "Hola Mundo";
 print("Hola Mundo");

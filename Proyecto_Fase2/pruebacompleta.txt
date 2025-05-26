@@ -7,7 +7,7 @@ float bnum = 30;
 string str = "Datos.txt";
 bool correcto = True;
 
-def suma (int c , int d){
+def suma (int a , int b){
 	resultado = a + b;
 }
 
