@@ -1,5 +1,6 @@
 package proyecto;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,19 +12,21 @@ import proyecto.antlr.ExprParser.Expresion_sumaContext;
 // Esta clase extiende el visitor base generado por ANTLR para recorrer el árbol sintáctico
 public class PythonGeneratorVisitor extends ExprBaseVisitor<Integer> {
 
-    // Archivo de salida .py donde se escribirá el código traducido
-    private PrintWriter writer;
-
-    //texto utilizado para guardar la expresion
-    private String ExpresionFinal = "";
-
-    // Controla el nivel de sangría para bloques
-    private int indentLevel = 0;
+    private PrintWriter writer;             // Archivo de salida .py donde se escribirá el código traducido
+    private String ExpresionFinal = "";     //texto utilizado para guardar la expresion
+    private int indentLevel = 0;            // Controla el nivel de sangría para bloques
 
     // Constructor: abre el archivo salida.py para escritura
-    public PythonGeneratorVisitor() {
+    public PythonGeneratorVisitor(String rutaArchivoFuente) {
         try {
-            writer = new PrintWriter(new FileWriter("salida.py"));
+            // Obtener el directorio del archivo fuente
+            File archivoFuente = new File(rutaArchivoFuente);
+            File directorio = archivoFuente.getParentFile();
+
+            // Crear archivo de salida en ese mismo directorio
+            File archivoSalida = new File(directorio, "salida.py");
+
+            writer = new PrintWriter(new FileWriter(archivoSalida));
         } catch (IOException e) {
             e.printStackTrace();
         }
