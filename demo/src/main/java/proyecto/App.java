@@ -11,7 +11,7 @@ import proyecto.antlr.ExprParser;
 public class App {
     public static void main(String[] args) {
 
-        String ruta = "C:\\antlr\\Proyecto_Fase2\\Proyecto_Fase2\\pruebacompleta.txt";
+        String ruta = "C:\\antlr\\Proyecto_Fase2\\Proyecto_Fase2\\prueba4.txt";
         String contenido = "";
         try{
             contenido = Files.readString(Path.of(ruta));            

@@ -1,10 +1,5 @@
-int res = 0;
-int c = 0;
-int d = 0;
-def suma(int a, int b) {
-  res = a + b;
-  Print(res);
-}
-c = 5;
-d = 10;
-suma(c,d);
+string resultado = "Hola";
+
+print(Texto);
+write(Texto, "Data.txt");
+resul = 5;

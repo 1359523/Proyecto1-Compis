@@ -45,8 +45,7 @@ public class Evaluador extends ExprBaseVisitor<Integer> {
     private String ExpresionFinal = "";     //texto utilizado para guardar la expresion
     private int indentLevel = 0;            // Controla el nivel de sangría para bloques
     private String paramfinales = "";       //Guarda los parametros de las funciones
-
-
+    
     public Evaluador(String Rutasalida){
         try {
             // Sobrescribe directamente el archivo indicado por la ruta
@@ -516,8 +515,11 @@ public class Evaluador extends ExprBaseVisitor<Integer> {
     @Override
     public Integer visitPrograma(ProgramaContext ctx) {
 
+        Variable v = new Variable("string", "0");
+        variables.put("contenido", v);
+
         if (visitChildren(ctx) == null){
-            System.err.println("El programa ha presentado un error");
+            //System.err.println("El programa ha presentado un error");
         }
         System.out.println("Visit programa");
         return 0;

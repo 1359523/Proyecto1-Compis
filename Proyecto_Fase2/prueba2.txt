@@ -1,2 +1,10 @@
-int resultado = 2 + 3 * 5;
-resultado = 23;
+int resultado = 0;
+int c = 0;
+int d = 0;
+def suma(int a, int b){
+    resultado = a + b;
+    print(resultado);
+}
+c = 5;
+d = 10;
+suma(c,d);

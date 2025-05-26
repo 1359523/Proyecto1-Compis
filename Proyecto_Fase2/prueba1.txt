@@ -1,8 +1,6 @@
-int var = 5;
+int var = 20;
 int var2 = var + 5;
-int var3 = 10 + 20;
-string Ejemplo = "Hola Mundo";
-if (5 > 10){
-    var3 = 10;
-}
-print("Hola Mundo");
+string ex = "";
+read("C:\\antlr\\Proyecto_Fase2\\demo\\src\\main\\java\\proyecto\\IO.txt");
+ex = contenido;
+write (ex, "C:\\antlr\\Proyecto_Fase2\\demo\\src\\main\\java\\proyecto\\IO2.txt");
