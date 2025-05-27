@@ -1,0 +1,18 @@
+int var = 0;
+int cero = 0;
+int max = 0;
+int continuar = 1;
+int uno = 1;
+
+while(continuar == uno){
+	print("Por favor ingrese un numero");
+	input(var);
+	if (var > max){
+		max = var;
+	}
+	if (var < cero){
+		continuar = 0;
+		print("El numero mayor es:");
+		print(max);
+	}
+}

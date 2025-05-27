@@ -1,0 +1,11 @@
+string cadena = "nombre"
+string var = "";
+int continuar = 1;
+int uno = 1;
+
+while (continuar == uno){
+    input(var);
+    if (var == cadena){
+        continuar = 0;
+    }
+}

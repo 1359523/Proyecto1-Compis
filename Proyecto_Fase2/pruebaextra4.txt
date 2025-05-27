@@ -1,0 +1,18 @@
+int numero = 55;
+int var = 0;
+int continuar = 1;
+int uno = 1;
+
+while (continuar == 1){
+    input(var);
+    if (var == numero){
+        continuar = 0;
+        print("El numero ingresado es el correcto");
+    }
+    if (var > numero){
+        print("El numero ingresado es mayor");
+    }
+    if (var < numero){
+        print("EL numero ingresado es menor");
+    }
+}

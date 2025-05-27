@@ -16,7 +16,7 @@ declaracion: INT_VAR IDENT '=' expresion ';'
 expresion: expresion_suma ;
 
 expresion_suma: expresion_multiplicacion (('+' | '-') expresion_multiplicacion)* ;
-expresion_multiplicacion: expresion_parentesis (('*' | '/') expresion_parentesis)* ;
+expresion_multiplicacion: expresion_parentesis (('*' | '/' | '%') expresion_parentesis)* ;
 expresion_parentesis: '(' expresion ')' 
                     | NUMERO 
                     | IDENT ;
@@ -24,7 +24,7 @@ expresion_parentesis: '(' expresion ')'
 booleano: 'True'
         | 'False'
         | IDENT (EQ | NEQ | GT | LT) IDENT
-        | NUMERO (EQ | NEQ | GT | LT) NUMERO ;
+        | NUMERO (EQ | NEQ | GT | LT) NUMERO;
 
 lista_funciones: funcion* ;
 
@@ -47,7 +47,8 @@ estructura_control: 'if' '(' booleano ')' bloque ('else' bloque)?
 
 entrada_salida: 'read' '(' STRING ')' ';'
               | 'write' '(' contenido ',' STRING ')' ';'  // write(dato, "ruta");
-              | 'print' '(' contenido ')' ';' ;
+              | 'print' '(' contenido ')' ';' 
+              | 'input' '(' IDENT ')' ';' ;
 
 contenido: STRING | IDENT ;
 
@@ -67,6 +68,7 @@ NEQ: '!=' ;
 GT: '>' ;
 LT: '<' ;
 
+MOD: '%' ;
 LBRACE: '{' ;
 RBRACE: '}' ;
 LPAREN: '(' ;

@@ -1,0 +1,14 @@
+int var = 0;
+int continuar = 1;
+int uno = 1;
+int max = 0;
+int mod = 0;
+
+while (continuar == uno){
+    input(var);
+    mod = var % 2;
+    if (mod == uno){
+        continuar = 0;
+    }
+}
+print("El programa finalizo");

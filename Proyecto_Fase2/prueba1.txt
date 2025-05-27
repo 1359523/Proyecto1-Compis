@@ -1,6 +1,21 @@
-int var = 20;
-int var2 = var + 5;
-string ex = "";
-read("C:\\antlr\\Proyecto_Fase2\\demo\\src\\main\\java\\proyecto\\IO.txt");
-ex = contenido;
-write (ex, "C:\\antlr\\Proyecto_Fase2\\demo\\src\\main\\java\\proyecto\\IO2.txt");
+int numero = 0;
+int continuar = 1;
+int resto = 0;
+
+def esPar(int num) {
+    resto = num % 2;
+    if (resto == 0) {
+        print("El numero es par");
+    } else {
+        print("El numero es impar");
+    }
+}
+
+while (continuar == 1) {
+    print("Ingrese un numero:");
+    input(numero);
+    esPar(numero);
+    print("¿Desea continuar? (1 para si, 0 para no):");
+    input(continuar);
+}
+

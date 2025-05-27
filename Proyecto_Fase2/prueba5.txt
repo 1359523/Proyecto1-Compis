@@ -1,4 +1,9 @@
-int contador = 0;
-while(True) {
-  print("Ciclo");
-}
+int var = 20;
+int var2 = var + 5;
+int valid = var % 2
+string ex = "";
+read("C:\\antlr\\Proyecto_Fase2\\demo\\src\\main\\java\\proyecto\\IO.txt");
+ex = contenido;
+write (ex, "C:\\antlr\\Proyecto_Fase2\\demo\\src\\main\\java\\proyecto\\IO2.txt");
+input(var2);
+print(var2);

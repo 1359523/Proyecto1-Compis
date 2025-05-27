@@ -1,1 +1,17 @@
-int = ;
+bool par = True;
+int cero = 0;
+
+def EsPar(int n){
+    global par
+    while (n > cero){
+        n = n -2;
+    }
+    if (n = cero){
+        par = true;
+    }
+    else {
+        par = false
+    }
+}
+
+while 

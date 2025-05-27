@@ -243,7 +243,7 @@ public class Evaluador extends ExprBaseVisitor<Integer> {
     public Integer visitEntrada_salida(Entrada_salidaContext ctx) {
         System.out.println("Visit: entrada_salida");
 
-        // Distingue si es print, write o read por el primer hijo del árbol
+        // Distingue si es print, write, o input por el primer hijo del árbol
         if (ctx.getChild(0).getText().equals("print")) {
             String contenido = ctx.contenido().getText();
             if (ctx.contenido().IDENT() != null && !variables.containsKey(ctx.contenido().IDENT().getText())){
@@ -268,8 +268,23 @@ public class Evaluador extends ExprBaseVisitor<Integer> {
             indentLevel++;
             writeln("contenido = f.read()");
             indentLevel--;
-        }
+        } else if (ctx.getChild(0).getText().equals("input")){
+            String varname = ctx.IDENT().getText();
 
+            //Verificar que la variable exista en el mapa
+            if(!variables.containsKey(varname)){
+                System.err.println("Error: La variable '" + varname + "' no ha sido declarada.");
+                return null;
+            }
+
+            //Obtener el tipo de la variable
+            Variable var = variables.get(varname);
+            String tipo = var.getTipo();
+            
+            if (tipo.equals("string")) tipo = "str";
+             // Escribir la línea de código Python
+            writeln(varname + " = " + tipo + "(input())");
+        }
         return 0;
     }
 
@@ -315,7 +330,6 @@ public class Evaluador extends ExprBaseVisitor<Integer> {
 
     @Override
     public Integer visitExpresion_multiplicacion(Expresion_multiplicacionContext ctx) {
-        //System.out.println("Visit: Expresion_multiplicacion");
 
         // Visitamos el primer término
         Integer resultado = visit(ctx.expresion_parentesis(0));
@@ -327,7 +341,11 @@ public class Evaluador extends ExprBaseVisitor<Integer> {
             if (operador.equals("*")) {
              resultado *= siguiente;
             } else if (operador.equals("/")) {
+             if (siguiente ==0) throw new ArithmeticException("Division por cero");   
              resultado /= siguiente;
+            } else if (operador.equals("%")){
+                if (siguiente == 0) throw new ArithmeticException("Modulo por cero");
+                resultado %= siguiente;
             }
         }
 
